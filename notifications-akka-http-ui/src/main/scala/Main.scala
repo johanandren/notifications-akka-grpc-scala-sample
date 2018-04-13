@@ -3,16 +3,15 @@
  */
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.common.EntityStreamingSupport
 import akka.stream.ActorMaterializer
 import akka.http.scaladsl.server.Directives._
 import akka.stream.scaladsl.{Flow, Sink}
-import akka.util.ByteString
 import spray.json._
-import DefaultJsonProtocol._
+import akka.grpc.GrpcClientSettings
 import akka.http.scaladsl.model.{StatusCodes, Uri}
 import akka.http.scaladsl.model.ws.TextMessage
 import notifications.grpc
+import notifications.grpc.{NotificationServiceApi, NotificationServiceApiClient}
 
 import scala.io.StdIn
 import scala.util.{Failure, Success}
@@ -22,7 +21,15 @@ object Main extends App {
   implicit val materializer = ActorMaterializer()
   import system.dispatcher
 
-  val client = NotificationsClient("127.0.0.1", 8081)
+  val settings = new GrpcClientSettings(
+    host = "127.0.0.1",
+    port = 8081,
+    overrideAuthority = Some("foo.test.google.fr"),
+    certificate = Some("ca.pem"),
+  )
+
+  // NotificationServiceApi and NotificationServiceApiClient are generated code:
+  val client: NotificationServiceApi = NotificationServiceApiClient(settings)
 
   val r = concat(
     path("view" / LongNumber) { id =>
