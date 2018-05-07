@@ -31,6 +31,7 @@ object Main extends App {
     .withCertificate("ca.pem")
     .withOverrideAuthority("foo.test.google.fr")
 
+  // NotificationServiceApi and NotificationServiceApiClient are generated code:
   val client = NotificationServiceClient(clientSettings)
 
   val r = concat(
