@@ -6,7 +6,7 @@ option java_multiple_files = true;
 // this - what is the difference?
 package notifications.grpc;
 
-service NotificationServiceApi {
+service NotificationService {
     rpc Notify (NotifyRequest) returns (NotifyResult) {}
     rpc GetNotifications (GetNotificationsRequest) returns (stream Notification) {}
 }

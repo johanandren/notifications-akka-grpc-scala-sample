@@ -27,7 +27,7 @@ object ServerMain extends App {
   import system.dispatcher
 
   val service: HttpRequest => Future[HttpResponse] =
-    grpc.NotificationServiceApiHandler(new NotificationService(system, materializer))
+    grpc.NotificationServiceHandler(new NotificationServiceImpl(system, materializer))
 
   Http2().bindAndHandleAsync(
     service,

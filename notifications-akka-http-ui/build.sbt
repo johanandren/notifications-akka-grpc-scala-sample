@@ -2,12 +2,18 @@ import akka.grpc.gen.scaladsl.{ScalaBothCodeGenerator, ScalaClientCodeGenerator}
 
 enablePlugins(AkkaGrpcPlugin)
 
+// needed until we publish to maven central
+resolvers += Resolver.bintrayRepo(
+  "akka",
+  "maven")
+
+
 scalaVersion := "2.12.4"
 
 val akkaVersion = "2.5.11"
 val akkaHttpVersion = "10.1.1"
 
-akkaGrpcCodeGenerators in Compile := GeneratorAndSettings(ScalaBothCodeGenerator, (akkaGrpcCodeGeneratorSettings in Compile).value) :: Nil
+akkaGrpcGeneratedSources := Seq(AkkaGrpc.Client)
 
 // to debug TLS issues:
 // javaOptions in run += "-Djava.util.logging.config.file=src/main/resources/grpc-debug-logging.properties"

@@ -3,7 +3,7 @@ syntax = "proto3";
 option java_multiple_files = true;
 package notifications.grpc;
 
-service NotificationServiceApi {
+service NotificationService {
     rpc Notify (NotifyRequest) returns (NotifyResult) {}
     rpc GetNotifications (GetNotificationsRequest) returns (stream Notification) {}
 }

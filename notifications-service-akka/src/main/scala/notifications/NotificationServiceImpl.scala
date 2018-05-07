@@ -10,7 +10,7 @@ import akka.stream.{Materializer, OverflowStrategy}
 
 import scala.concurrent.Future
 
-final class NotificationService(system: ActorSystem, mat: Materializer) extends grpc.NotificationServiceApi {
+final class NotificationServiceImpl(system: ActorSystem, mat: Materializer) extends grpc.NotificationService {
 
   private val notificationSupervisor = system.actorOf(NotificationSupervisor.props(), "notification-supervisor")
   (1 to 10).foreach(n =>
